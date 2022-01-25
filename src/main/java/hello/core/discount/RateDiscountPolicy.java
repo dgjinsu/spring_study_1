@@ -1,10 +1,14 @@
 package hello.core.discount;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.member.Grade;
 import hello.core.member.Member;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
+@MainDiscountPolicy  //Qualifier사용 시 문자를 사용하기때문에 오타가 난다면 잡아낼 수 없다. 이때 annotation을 만들어서 사용 가능하다
 public class RateDiscountPolicy implements DiscountPolicy {
 
     private int discountPercent = 10;
