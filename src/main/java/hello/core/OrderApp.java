@@ -18,7 +18,7 @@ public class OrderApp {
 //      MemberService memberService = new MemberServiceImpl(memberRepository);
 //      OrderService orderService = new OrderServiceImpl(memberRepository, discountPolicy);
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AutoAppConfig.class);
         MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
         OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
 
