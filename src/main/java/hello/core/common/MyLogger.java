@@ -11,7 +11,7 @@ import java.util.UUID;
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MyLogger {
-    private String uuid; //http요청 당 하나씩 생성되므로, uuid를 저장해농으면 다른 http요청과 구분할 수 있다.
+    private String uuid; //http요청 당 하나씩 생성되므로, uuid를 저장해농으면 다른 http요청과 구분할 수 있다
     private String requestUrl;
 
     public void setRequestUrl(String requestUrl) {
