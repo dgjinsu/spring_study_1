@@ -1,11 +1,11 @@
 package hello.core;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
+@Data
 @ToString
 public class HelloLombok {
     private String name;
