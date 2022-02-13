@@ -10,6 +10,8 @@ import java.util.UUID;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+//proxyMode를 사용해서 가짜 프록스 객체를 생성해서 스프링 컨테이너에 등록함. 의존관계주입도 가짜 객체가 주입됨.
+//실제 MyLogger를 사용하는 시점이 오면 진짜 객체로 대체됨!
 public class MyLogger {
     private String uuid; //http요청 당 하나씩 생성되므로, uuid를 저장해농으면 다른 http요청과 구분할 수 있다
     private String requestUrl;

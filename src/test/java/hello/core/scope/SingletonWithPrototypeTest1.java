@@ -28,11 +28,11 @@ public class SingletonWithPrototypeTest1 {
     @Test
     void singletonClientUsePrototype() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ClientBean.class, PrototypeBean.class);
-        ClientBean clientBean1 = ac.getBean(ClientBean.class);
+        ClientBean clientBean1 = ac.getBean(ClientBean.class); //싱글톤 호출
         int count1 = clientBean1.logic();
         Assertions.assertThat(count1).isEqualTo(1);
 
-        ClientBean clientBean2 = ac.getBean(ClientBean.class);
+        ClientBean clientBean2 = ac.getBean(ClientBean.class); //싱글톤 호출
         int count2 = clientBean2.logic();
         Assertions.assertThat(count2).isEqualTo(1);
 
