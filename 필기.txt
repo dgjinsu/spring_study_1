@@ -94,4 +94,4 @@ MemberService memberService = application.getBean("memberService", memberService
 @Configuration 과 싱글톤
 스프링이 CGLIB 이라는 바이트코드 조작 라이브러리를 이용하여 임의의 다른 클래스를 만들어 스프링 빈으로 등록함
 	결론 : @Configuration 때문에 싱글톤이 보장된다. (여러번 객체를 new 호출해도..)
-	        @Configuration 없이 @Bean만 붙이면 싱글톤이 보장되지 않음
+	        @Configuration 없이 @Bean만 붙이면 싱글톤이 보장되지 않음.
