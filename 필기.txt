@@ -95,3 +95,20 @@ MemberService memberService = application.getBean("memberService", memberService
 스프링이 CGLIB 이라는 바이트코드 조작 라이브러리를 이용하여 임의의 다른 클래스를 만들어 스프링 빈으로 등록함
 	결론 : @Configuration 때문에 싱글톤이 보장된다. (여러번 객체를 new 호출해도..)
 	        @Configuration 없이 @Bean만 붙이면 싱글톤이 보장되지 않음.
+
+
+<@ComponentScan>
+- @Component 애너테이션이 붙은 클래스를 스캔해서 스프링 빈으로 등록한다.
+- @Autowired 를 이용하여 의존관계 주입을 해줌
+- basePackaes : 탐색(스캔) 할 위치를 정함, 정한 위치로 부터 하위폴더를 전부 뒤짐
+- 권장하는 방법 : 탐색할 위치를 따로 정하지 않고, 설정 정보 클래스의 위치를 프로젝트 최상단에 두는 것.
+
+@Component : 컴포넌트 스캔에서 사용
+@Controller : 스프링 MVC 컨트롤러에서 사용
+@Service : 스프링 비즈니스 로직에서 사용 / 서비스는 특별한 처리를 하지 않는다. 관례
+@Repository : 스프링 데이터 접근 계층에서 사용
+@Configuration : 스프링 설정 정보에서 사용
+
+필터기능
+- includeFilters
+- excludeFilters
