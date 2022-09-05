@@ -147,3 +147,24 @@ MemberService memberService = application.getBean("memberService", memberService
 1. 프로토 타입 스코프의 빈을 스프링 컨테이너에 요청
 2. 스프링 컨테이너는 이 시점에 프로토타입 빈을 생성하고, 필요한 의존관계를 주입한다.
 3. 스프링 컨테이너는 생성한 프로토타입 빈을 클라이언트에 반환한다.
+
+
+싱글톤이 프로토 타입을 주입 받았을 경우 문제점이 발생한다.
+- 싱글톤 빈이 만들어지면서 프로토 타입 빈이 주입됨. 따라서 새로운 프로토 타입 빈을 만드는 것이 아님
+- 해결법 : Provider을 사용
+		프로토 타입을 주입 받는 대신
+		private ObjectProvider<PrototypeBean> prototypeBeanProvider 을 주입받고
+		프로토 타입이 필요할떄마다 prototypeBeanProvider.getObject(); 로 프로토타입 빈을 가져옴
+- ObjectProvider는 딱 필요한 DL(디펜던시 룩업) 정도의 기능을 제공
+- ObjectProvicer 는 스프링에 의존적 But 의존적이지 않은 기능도 있음
+- javax.inject 의 Provider 을 사용
+
+
+<웹스코프>
+웹 스코프는 웹 환경에서만 동작
+프로토 타입과 다르게 스프링이 해당 스코프의 종료시점까지 관리
+-request : HTTP 요청 하나가 들어오고 나갈 때 까지 유지되는 스코프, 각각의 HTTP 요청마다 별도의 빈 인스턴스가 생성되고 관리
+-session : HTTP Session 과 동일한 생명주기를 가지는 스코프
+
+<request 스코프>
+- 동시에 여러 HTTP 요청이 오면 정확히 어떤 요청이 남긴 로그인지 구분하기 어려움. 이때 사용하기 좋은 스코프
