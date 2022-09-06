@@ -168,3 +168,8 @@ MemberService memberService = application.getBean("memberService", memberService
 
 <request 스코프>
 - 동시에 여러 HTTP 요청이 오면 정확히 어떤 요청이 남긴 로그인지 구분하기 어려움. 이때 사용하기 좋은 스코프
+- 여러 요청이 와도 요청별로 관리 해줌
+
+- 문제점 : 스프링 빈을 등록할 때 request 스코프 빈은 요청이 와야 생성되기 때문에 의존관계 주입 받는 시점에서 오류 발생
+- 해결책 : @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS) 을 사용하면
+	     의존관계 주입 받을 때 가자 객체를 주입하여 오류 해결
