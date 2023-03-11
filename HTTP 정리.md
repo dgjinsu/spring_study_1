@@ -55,5 +55,20 @@ PORT
 * 일종의 전화번호부와 같으며 도메인 명을 IP 주소로 변환한다. 
 
 
+## URI 
+![image](https://user-images.githubusercontent.com/97269799/224469060-c6fa2981-f43e-47b5-bb05-7e7f29403aab.png)
+* Uniform:리소스를 식별하는 통일된 방식
+* Resource: 자원, URI로 식별할 수 있는 모든 것(제한이 없다.)
+* Identifier: 다른 항목과 구분하는데 필요한 정보
 
+### URL 분석
+`scheme://[userinfo@]host[:port][/port][/path][?query][#fragment]`
+`https://google.com/search?q=hello&hl=ko`
+* 스키마 : 주로 프로토콜 사용
+ * 프로토콜 : 어떤 방식으로 자원에 접근할 것인가 하는 약속 규칙(http, https ftp 등)
+* http:80포트 / https:443포트 / 
+* https 를 적으면 뒤에 port는 생략 가능
+* userinfo는 거의 사용 x
+* host : 보통 도메인 명 (naver.com)
+* query : key=value 형태 / ?로 시작 / &로 추가 가능
 
