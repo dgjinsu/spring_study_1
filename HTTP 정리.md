@@ -1,6 +1,6 @@
 ## IP 인터넷 프로토콜
 
-###역할
+### 역할
 * 지정한 IP주소에 데이터 전달
 * 패킷(Packet)이라는 통신 단위로 데이터를 전달한다.
 
@@ -148,3 +148,104 @@ HTTP(Hyper Text Transfer Protocol) : 문서간에 링크를 통해 연결할 수
 HTTP 헤더엔 HTTP 전송에 필요한 모든 부가 정보를 담고 있음.
 HTTP 메시지 바디엔 실제 전송할 데이터 (html문서, json, 이미지..)
 
+
+## HTTP 메서드
+* 회원 목록 조회 : /members
+* 회원 조회: /members/{id}
+* 회원 등록: /members/{id}
+* 회원 수정: /members/{id}
+* 회원 삭제: /members/{id}
+참고: 계층 구조상 상위를 컬렉션으로 보고 복수산어를 사용하기를 권장한다(member→ members)
+
+### HTTP 메서드 종류
+* GET: 리소스 조회
+ * 서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트링)를 통해 전달한다.
+* POST: 요청 데이터 처리, 주로 등록에 사용한다.
+ * 메시지 바디를 통해 서버로 요청데이터를 전달한다.
+ * 새 리소스 생성(등록)
+ * 요청 데이터 처리
+* PUT: 리소스를 대체하며 해당 리소스가 없으면 생성한다.
+ * 리소스를 대체하는 메서드로 리소스가 있을경우 대체하고 없을 경우 생성한다. (Overwrite)
+ * 클라이언트가 리소스를 식별한다 (ex. 게시글 100번째에 put 하겠다.)
+ * **기존의 리소스를 완전히 대체함.**
+* PATCH: 리소스 부분 변경
+ * put의 리소스를 완전히 대체하는 기능과 다르게 리소스를 일부 변경함. 
+* DELETE: 리소스 삭제
+
+### HTTP 메서드의 속성
+![image](https://user-images.githubusercontent.com/97269799/224476459-71295ed1-8795-48ca-b398-52b48b106fda.png)
+
+* 안전(Safe Methods)
+ * 호출해도 리소스가 변경되지 않는다. 
+ * GET같은경우에 조회만해서 리소스를 변경하지 않기에 안전하다. 
+ * POST,PUT,DELETE,PATCH같은경우 리소스를 변경하기에 안전하지 않다.
+* 멱등
+ * GET: 몇 번을 조회하더라도 같은 결과가 조회된다. ⇒ 회원 정보를 몇번을 조회한다고 정보가 달라지지 않는다. 
+ * PUT: 결과를 대체한다. 따라서 같은 요청을 여러번해도 최종 결과는 같다.
+ * DELETE: 결과를 삭제한다. 같은 요청을 여러번 해도 삭제된 결과는 같다.
+ * POST: **멱등이 아니다.** 두 번 호출하면 에러가 발생할수 있다. ⇒ POST로 주문을 두 번 호출하면 결제가 중복될 수 있다. 
+ * 멱등의 활용
+  * 서버가 TIMEOUT 등으로 정상 응답을 하지 못했을때 클라이언트에서 **같은 요청을 해도 되는가에 대한 판단근거**가 된다. 
+* **캐시가능**(Cacheable Methods)
+ * 응답 결과 리소스를 캐시해서 사용 가능
+ * 실제로는 GET, HEAD 정도만 캐시로 사용한다.
+
+
+
+## 클라이언트에서 서버로 데이터 전송
+
+* 쿼리 파라미터를 통한 데이터 전송 
+ * :GET 에서 많이 사용하고 정렬필터나 검색어를 사용할 때 이 쿼리 파라미터를 많이 사용한다. 
+* 메시지 바디를 통한 데이터 전송
+ * : POST, PUT, PATCH에서 사용되며 회원 가입, 상품 주문과 같이 리소스를 등록하거나 변경하는데에 사용한다. 
+
+클라이언트에서 서버로 데이터를 전송하는 4가지 상황
+1. 정적 데이터 조회
+2. 동적 데이터 조회
+3. HTML Form 을 통한 데이터 전송
+![image](https://user-images.githubusercontent.com/97269799/224477275-e059016e-9458-498e-9159-aad8b875eb33.png)
+   - multipart form data
+![image](https://user-images.githubusercontent.com/97269799/224477329-a7638c6f-42e8-4193-a6bb-9adc1fb1058d.png)
+multipart/form-data 형식이라면 HTTP 메세지에 임의의 구분자(boundary=——-XXX) 가 Form 데이터간 구분을 지어준다. 
+4. HTTP API를 통한 데이터 전송
+  - Content-Type: application/json을 주로 사용(사실상 표준)
+
+## HTTP API 설계 에시
+> POST 신규 등록
+![image](https://user-images.githubusercontent.com/97269799/224477748-7d51de79-1544-468d-a735-8f86e5d51d57.png)
+
+* POST - 신규 자원 등록 특징
+ * 클라이언트는 등록될 리소스의 URI를 모른다. 
+ * 서버가 새로 등록된 리소스 URI를 생성해준다.
+ * `컬랙션` 이라고 함
+
+
+> PUT 신규 등록 (파일 같은 경우 put 을 씀)
+![image](https://user-images.githubusercontent.com/97269799/224478041-9e1435bb-13dd-4a19-87b9-b1cfd2be411d.png)
+
+
+* put - 신규 자원 등록 특징
+ * 이땐 클라이언트가 리소스 URI 를 알고 있어야 한다.
+  * /files/{filename} -> put
+ * `스토어` 라고 
+
+> HTML FORM 사용
+![image](https://user-images.githubusercontent.com/97269799/224478231-f36a9412-635b-417e-8422-b0f0c60cfec6.png)
+* post 의 /new, /edit, /delete 같은 걸 컨트롤 URI 라고 함
+
+### 참고하면 좋은 URI 설계 개념
+* 문서(document)
+ * 단일 개념(파일 하나, 객체 인스턴스, 데이터베이스 row)
+  * 예) /members/100, /file/star.jpg
+* 컬렉션(collection)
+ * 서버가 관리하는 리소스 디렉토리
+ * 서버가 리소스의 URI를 생성하고 관리
+  * 예) /members
+* 스토어(store)
+ * 클라이언트가 관리하는 자원 저장소
+ * 클라이언트가 리소스의 URI를 알고 관리
+  * 예) /files
+* 컨트롤러(controller), 컨트롤 URI
+ * 문서, 컬렉션, 스토어로 해결하기 어려운 추가 프로세스 실행
+ * 동사를 사용한다.
+  *예) /members/{id}/delete
