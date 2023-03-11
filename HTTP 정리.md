@@ -136,3 +136,15 @@ HTTP(Hyper Text Transfer Protocol) : 문서간에 링크를 통해 연결할 수
 (Ex: 선착순 이벤트, 명절 KTX예약, 개강전 수업 등록)
 
 이럴 경우 수천, 수만명 이상이 동시에 접속을 하면서 서버에 과부하가 걸리는 경우가 있는데,  이 경우 무상태 페이지를 활용해 페이지 접속인원을 분산해서 대용량 트래픽을 분산시키면 좋다
+
+
+## HTTP 메시지
+* 요청 메시지
+![image](https://user-images.githubusercontent.com/97269799/224472649-e02d557e-c117-4634-a48b-e4ee953aaa65.png)
+
+* 응답 메시지
+![image](https://user-images.githubusercontent.com/97269799/224472669-d4888ed4-922f-44e5-8768-451fe2c5b5bc.png)
+
+HTTP 헤더엔 HTTP 전송에 필요한 모든 부가 정보를 담고 있음.
+HTTP 메시지 바디엔 실제 전송할 데이터 (html문서, json, 이미지..)
+
